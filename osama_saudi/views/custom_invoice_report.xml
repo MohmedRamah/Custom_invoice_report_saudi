@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_document_inherit_arabic" inherit_id="l10n_sa.arabic_english_invoice">
+<!--        <xpath expr="//t[@t-set='information_block']" position="attributes">-->
+<!--            <attribute name="style">padding-top: 1px !important;</attribute>-->
+<!--        </xpath>-->
+                  <xpath expr="//t[@t-set='address']" position="attributes">
+                       <attribute name="style"> padding-top: 40px !important;</attribute>
+        <!--            <t t-set="information_block">-->
+        <!--                <div class="row">-->
+        <!--                    <p class="col-6 me-3">-->
+        <!--                        <img t-if="o.l10n_sa_qr_code_str"-->
+        <!--                            style="display:block;"-->
+        <!--                            t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 200, 200)"/>-->
+        <!--                    </p>-->
+        <!--                    <div class="col-6" t-if="o.partner_shipping_id and (o.partner_shipping_id != o.partner_id)" groups="account.group_delivery_invoice_address" name="shipping_address_block">-->
+        <!--                        <strong>Shipping Address:</strong>-->
+        <!--                        <div t-field="o.partner_shipping_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </t>-->
+                </xpath>
+    </template>
+    <!--    <template id="report_invoice_document_inherit_arabic12" inherit_id="l10n_gcc_invoice.arabic_english_invoice">-->
+    <!--        <xpath expr="//t[@t-set='address']" position="attributes">-->
+
+    <!--        </xpath>-->
+    <!--    </template>-->
+
+</odoo>
