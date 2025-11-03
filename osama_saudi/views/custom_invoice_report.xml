@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="report_invoice_document_inherit_arabic" inherit_id="l10n_sa.arabic_english_invoice">
+        <!-- استبدل ال layout الأساسي بـ external_layout_clean -->
+        <xpath expr="//t[@t-call='web.external_layout']" position="attributes">
+            <attribute name="t-call">web.basic_layout</attribute>
+        </xpath>
+        <xpath expr="//div[@class='page']" position="before">
+            <div class="row" style="padding:20px;">
+                <p class="col-6 me-3">
+                    <img t-if="o.l10n_sa_qr_code_str"
+                         style="display:block;display: block;
+                                width: 120px;height: 120px;
+                                margin: 0 auto;border: 1px solid #ccc;
+                                border-radius: 8px;background: white;padding: 5px;"
+                         t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 200, 200)"/>
+                </p>
+                <div class="col-6"
+                     t-if="o.partner_shipping_id and (o.partner_shipping_id != o.partner_id)"
+                     groups="account.group_delivery_invoice_address"
+                     name="shipping_address_block">
+                    <strong>Shipping Address:</strong>
+                    <div t-field="o.partner_shipping_id"
+                         t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                </div>
+            </div>
+        </xpath>
+
         <xpath expr="//t[@t-set='information_block']/div[@class='row']" position="attributes">
             <attribute name="style">
                 border: 2px solid #007bff;
@@ -72,20 +97,30 @@
             <span>opjqidhk'psojIODWKQd;jdk;jQOdak</span>
         </xpath>
     </template>
+    <template id="my_custom_layout_style" inherit_id="web.external_layout_boxed">
+        <xpath expr="//div[contains(@class, 'row mb8')]" position="replace">
+            <!-- تم حذف عنوان الشركة -->
+        </xpath>
+    </template>
     <template id="my_custom_layout_style" inherit_id="web.external_layout_standard">
         <xpath expr="//div[contains(@class, 'pt-5')]" position="attributes">
             <attribute name="style">padding-top:10px; margin-top:20px; height:100px; width:90%; background-color:red;
             </attribute>
         </xpath>
+        <xpath expr="//div[img[@t-if='company.logo']]" position="replace">
+            <!-- تم حذف اللوجو بالكامل -->
+        </xpath>
+
+
     </template>
     <template id="custom_address_layout" inherit_id="web.address_layout">
         <xpath expr="//div[contains(@class, 'address row')]" position="attributes">
-            <attribute name="style">margin-top:-47px;justify-content: flex-end; background-color:red; padding:10px;</attribute>
+            <attribute name="style">margin-top:-47px;justify-content: flex-end; background-color:red; padding:10px;
+            </attribute>
         </xpath>
-<!--        <xpath expr="//div[@name='address']" position="attributes">-->
-<!--            <attribute name="style">text-align:right; width:60%;</attribute>-->
-<!--        </xpath>-->
+
+        <xpath expr="//div[@name='address']" position="attributes">
+            <attribute name="style">background-color:black;</attribute>
+        </xpath>
     </template>
-
-
 </odoo>
