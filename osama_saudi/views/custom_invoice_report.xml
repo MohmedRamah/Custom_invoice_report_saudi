@@ -1,30 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="report_invoice_document_inherit_arabic" inherit_id="l10n_sa.arabic_english_invoice">
-<!--        <xpath expr="//t[@t-set='information_block']" position="attributes">-->
-<!--            <attribute name="style">padding-top: 1px !important;</attribute>-->
-<!--        </xpath>-->
-                  <xpath expr="//t[@t-set='address']" position="attributes">
-                       <attribute name="style"> padding-top: 40px !important;</attribute>
-        <!--            <t t-set="information_block">-->
-        <!--                <div class="row">-->
-        <!--                    <p class="col-6 me-3">-->
-        <!--                        <img t-if="o.l10n_sa_qr_code_str"-->
-        <!--                            style="display:block;"-->
-        <!--                            t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 200, 200)"/>-->
-        <!--                    </p>-->
-        <!--                    <div class="col-6" t-if="o.partner_shipping_id and (o.partner_shipping_id != o.partner_id)" groups="account.group_delivery_invoice_address" name="shipping_address_block">-->
-        <!--                        <strong>Shipping Address:</strong>-->
-        <!--                        <div t-field="o.partner_shipping_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>-->
-        <!--                    </div>-->
-        <!--                </div>-->
-        <!--            </t>-->
-                </xpath>
-    </template>
-    <!--    <template id="report_invoice_document_inherit_arabic12" inherit_id="l10n_gcc_invoice.arabic_english_invoice">-->
-    <!--        <xpath expr="//t[@t-set='address']" position="attributes">-->
+        <xpath expr="//t[@t-set='information_block']/div[@class='row']" position="attributes">
+            <attribute name="style">
+                border: 2px solid #007bff;
+                border-radius: 10px;
+                padding: 10px;
+                background-color: #f9f9f9;
+                margin-top: 10px;
+                align-items: center;
+            </attribute>
+        </xpath>
+        <!-- تعديل شكل صورة الباركود فقط -->
+        <xpath expr="//t[@t-set='information_block']//img" position="attributes">
+            <attribute name="style">
+                display: block;
+                width: 120px;
+                height: 120px;
+                margin: 0 auto;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                background: white;
+                padding: 5px;
+            </attribute>
+        </xpath>
+        <!-- تعديل استايل عمود العنوان -->
+        <xpath expr="//t[@t-set='information_block']//div[contains(@class, 'col-6')]" position="attributes">
+            <attribute name="style">
+                font-size: 14px;
+                line-height: 1.5;
+                direction: rtl;
+                text-align: right;
+            </attribute>
+        </xpath>
+        <!-- تعديل الـ QR نفسه -->
+        <xpath expr="//t[@t-set='information_block']//p" position="attributes">
+            <attribute name="style">
+                text-align: center;
+                padding-top: 5px;
+            </attribute>
+        </xpath>
+        <!-- تعديل العنوان نفسه -->
+        <xpath expr="//t[@t-set='information_block']//div[@name='shipping_address_block']" position="attributes">
+            <attribute name="style">
+                font-size: 20px;
+                line-height: 1.5;
+                direction: rtl;
+                text-align: right;
+            </attribute>
+        </xpath>
+        <xpath expr="//div[@class='row'][1]" position="before">
+            <div style="text-align:center; font-weight:bold; color:red;">عنوان مخصص
+                هنا
+            </div>
+        </xpath>
 
-    <!--        </xpath>-->
-    <!--    </template>-->
+        <xpath expr="//div[@class='page']" position="before">
+            <div style="text-align:center; font-weight:bold;">
+                <t t-esc="o.name"/>
+                - فاتورة مخصصة
+            </div>
+        </xpath>
+        <xpath expr="//t[@t-set='address']" position="attributes">
+            <attribute name="style">padding-top: 0px !important;</attribute>
+        </xpath>
+    </template>
+
+
+    <template id="arabic_english_invoice_inherit" inherit_id="l10n_gcc_invoice.arabic_english_invoice">
+        <xpath expr="//t[@t-set='address']" position="inside">
+            <span>opjqidhk'psojIODWKQd;jdk;jQOdak</span>
+        </xpath>
+    </template>
+    <template id="my_custom_layout_style" inherit_id="web.external_layout_standard">
+        <xpath expr="//div[contains(@class, 'pt-5')]" position="attributes">
+            <attribute name="style">padding-top:10px; margin-top:20px; height:100px; width:90%; background-color:red;
+            </attribute>
+        </xpath>
+    </template>
+    <template id="custom_address_layout" inherit_id="web.address_layout">
+        <xpath expr="//div[contains(@class, 'address row')]" position="attributes">
+            <attribute name="style">margin-top:-47px;justify-content: flex-end; background-color:red; padding:10px;</attribute>
+        </xpath>
+<!--        <xpath expr="//div[@name='address']" position="attributes">-->
+<!--            <attribute name="style">text-align:right; width:60%;</attribute>-->
+<!--        </xpath>-->
+    </template>
+
 
 </odoo>
